@@ -95,7 +95,7 @@ typedef struct _PING_ICMP_TX_INFO {
 #define MAX_SEND_NUMBER       10000
 #define MAX_BUFFER_SIZE       32768
 #define DEFAULT_TIMER_PERIOD  358049
-#define ONE_SECOND            10000000
+#define ONE_SECOND            500000
 #define PING_IP_CHOICE_IP4    1
 #define PING_IP_CHOICE_IP6    2
 #define DEFAULT_SEND_COUNT    10
