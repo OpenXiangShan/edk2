@@ -103,16 +103,18 @@ typedef enum {
 
 #define EFI_PCI_ADDRESS(bus, dev, func, reg) \
   (UINT64) ( \
-  (((UINTN) bus) << 24) | \
-  (((UINTN) dev) << 16) | \
-  (((UINTN) func) << 8) | \
-  (((UINTN) (reg)) < 256 ? ((UINTN) (reg)) : (UINT64) (LShiftU64 ((UINT64) (reg), 32))))
+  (((UINTN) bus) << 20) | \
+  (((UINTN) dev) << 15) | \
+  (((UINTN) func) << 12) | \
+  (((UINTN) (reg))))
 
+/* Adapt to xilinx xdma pci configuration space address format*/
 typedef struct {
-  UINT8     Register;
-  UINT8     Function;
-  UINT8     Device;
-  UINT8     Bus;
+  UINT32    Register        : 12;
+  UINT32    Function        :  3;
+  UINT32    Device          :  5;
+  UINT32    Bus             :  8;
+  UINT32    Reserved        :  4;
   UINT32    ExtendedRegister;
 } EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL_PCI_ADDRESS;
 
