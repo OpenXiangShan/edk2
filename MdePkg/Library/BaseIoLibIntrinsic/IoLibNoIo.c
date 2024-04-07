@@ -17,6 +17,12 @@
 //
 #include "BaseIoLibIntrinsicInternal.h"
 
+#define RISCV_FENCE(p, s) \
+	__asm__ __volatile__ ("fence " #p "," #s : : : "memory")
+
+/* Read & Write Memory barrier */
+#define mb()			RISCV_FENCE(iorw,iorw)
+
 /**
   Reads an 8-bit I/O port.
 
@@ -413,6 +419,7 @@ MmioRead8 (
   Flag = FilterBeforeMmIoRead (FilterWidth8, Address, &Value);
   if (Flag) {
     Value = *(volatile UINT8 *)Address;
+    mb();
   }
 
   FilterAfterMmIoRead (FilterWidth8, Address, &Value);
@@ -445,6 +452,7 @@ MmioWrite8 (
   Flag = FilterBeforeMmIoWrite (FilterWidth8, Address, &Value);
   if (Flag) {
     *(volatile UINT8 *)Address = Value;
+    mb();
   }
 
   FilterAfterMmIoWrite (FilterWidth8, Address, &Value);
@@ -480,6 +488,7 @@ MmioRead16 (
   Flag = FilterBeforeMmIoRead (FilterWidth16, Address, &Value);
   if (Flag) {
     Value = *(volatile UINT16 *)Address;
+    mb();
   }
 
   FilterAfterMmIoRead (FilterWidth16, Address, &Value);
@@ -514,6 +523,7 @@ MmioWrite16 (
   Flag = FilterBeforeMmIoWrite (FilterWidth16, Address, &Value);
   if (Flag) {
     *(volatile UINT16 *)Address = Value;
+    mb();
   }
 
   FilterAfterMmIoWrite (FilterWidth16, Address, &Value);
@@ -549,6 +559,7 @@ MmioRead32 (
   Flag = FilterBeforeMmIoRead (FilterWidth32, Address, &Value);
   if (Flag) {
     Value = *(volatile UINT32 *)Address;
+    mb();
   }
 
   FilterAfterMmIoRead (FilterWidth32, Address, &Value);
@@ -583,6 +594,7 @@ MmioWrite32 (
   Flag = FilterBeforeMmIoWrite (FilterWidth32, Address, &Value);
   if (Flag) {
     *(volatile UINT32 *)Address = Value;
+    mb();
   }
 
   FilterAfterMmIoWrite (FilterWidth32, Address, &Value);
@@ -618,6 +630,7 @@ MmioRead64 (
   Flag = FilterBeforeMmIoRead (FilterWidth64, Address, &Value);
   if (Flag) {
     Value = *(volatile UINT64 *)Address;
+    mb();
   }
 
   FilterAfterMmIoRead (FilterWidth64, Address, &Value);
@@ -652,6 +665,7 @@ MmioWrite64 (
   Flag = FilterBeforeMmIoWrite (FilterWidth64, Address, &Value);
   if (Flag) {
     *(volatile UINT64 *)Address = Value;
+    mb();
   }
 
   FilterAfterMmIoWrite (FilterWidth64, Address, &Value);
